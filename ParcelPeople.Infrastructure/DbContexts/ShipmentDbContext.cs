@@ -45,11 +45,5 @@ namespace ParcelPeople.Infrastructure.DbContexts
              new Customer { Id = new Guid("c2e9e363-2e20-433a-88d6-3c1090d85d52"), FirstName = "Kola", LastName = "Oj", Email = "kolaoj@test.com", ContactNumber = "+4477788899911" }
             );
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            string databasePath = $"{AppDomain.CurrentDomain.SetupInformation.ApplicationBase}MySqliteDatabase.db";
-            options.UseSqlite($"Data Source=C:\\Users\\kola.ojubanire\\source\\personal-repos\\Ascot\\ParcelPeople\\ParcelPeople.Infrastructure\\Databases\\MySqliteDatabase.db");
-        }
-
     }
 }

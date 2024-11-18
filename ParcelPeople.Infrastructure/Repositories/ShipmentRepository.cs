@@ -24,6 +24,7 @@ namespace ParcelPeople.Infrastructure.Repositories
             return await context.Shipments
                 .Include(e=> e.Cities)
                 .Include(e => e.Parcels)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(e=> e.Id == id) ?? throw new Exception("Shipment could not be found");
         }
 

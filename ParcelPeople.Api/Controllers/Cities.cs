@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParcelPeople.Application.Services.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ParcelPeople.Api.Controllers
 {
@@ -10,6 +11,7 @@ namespace ParcelPeople.Api.Controllers
         private readonly ICityService cityService = cityService ?? throw new ArgumentNullException(nameof(cityService));
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Gets a city")]
         public async Task<IResult> GetCity(int id)
         {
             try
@@ -30,6 +32,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Gets all cities")]
         public async Task<IResult> GetAllCities([FromQuery] int top = 10, [FromQuery] int skip = 0)
         {
             try

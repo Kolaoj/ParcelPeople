@@ -5,6 +5,7 @@ using ParcelPeople.Application.Dtos.Update.Mappings;
 using ParcelPeople.Application.Services.Interfaces;
 using ParcelPeople.Domain.Entities;
 using ParcelPeople.Domain.Enums;
+using ParcelPeople.Domain.Exceptions;
 using ParcelPeople.Infrastructure.Repositories.Interfaces;
 
 namespace ParcelPeople.Application.Services
@@ -18,6 +19,14 @@ namespace ParcelPeople.Application.Services
         public async Task<Shipment> CreateQuote(CreateShipmentQuote createQuote)
         {
             var cities = await cityService.GetCitiesByIds(createQuote.Cities.Select(c => c.CityId));
+
+            var unknownCity = createQuote.Cities.FirstOrDefault(sc=> !cities.Select(c=> c.Id).Contains(sc.CityId) );
+
+            if (unknownCity != null)
+            {
+                throw new CityDoesNotExistExcepion($"The city with id: {unknownCity.CityId} does not exist");
+            }
+
             var shipmentCostAndCultureCode = await CalculateShipmentCost(createQuote.Cities, cities, createQuote.Parcels);
 
             var shipment = createQuote.ToQuote(cities, shipmentCostAndCultureCode.Item1, shipmentCostAndCultureCode.Item2);

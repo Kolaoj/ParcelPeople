@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ParcelPeople.Application.Services;
 using ParcelPeople.Application.Services.Interfaces;
 using ParcelPeople.Infrastructure.DbContexts;
@@ -18,9 +19,13 @@ builder.Services.AddControllers()
     });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c=>
+ c.EnableAnnotations());
 
-builder.Services.AddDbContext<ShipmentDbContext>();
+var relativeConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Could not obtain the connection string, check appsettings"); 
+var absoluteConnectionString = Path.GetFullPath(relativeConnectionString, AppContext.BaseDirectory);
+
+builder.Services.AddDbContext<ShipmentDbContext>(options=> options.UseSqlite($"Data Source={absoluteConnectionString}"));
 
 builder.Services.AddScoped<IShipmentService, ShipmentService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();

@@ -15,6 +15,7 @@ namespace ParcelPeople.Infrastructure.Repositories
         {
             return await context.Cities
                         .Where(city => cityIds.Contains(city.Id))
+                        .AsNoTracking()
                         .ToListAsync();
         }
 
@@ -24,6 +25,7 @@ namespace ParcelPeople.Infrastructure.Repositories
                           .OrderBy(city => city.Name)
                           .Skip(skip)
                           .Take(top)
+                          .AsNoTracking()
                           .ToListAsync();
         }
     }

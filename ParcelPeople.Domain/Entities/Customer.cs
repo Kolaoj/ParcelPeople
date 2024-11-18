@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParcelPeople.Domain.Models
 {
-    [Index(nameof(Email), nameof(ContactNumber), IsUnique = true)]
+    [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(ContactNumber), IsUnique = true)]
     public class Customer
     {
         public Guid Id { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParcelPeople.Domain.Exceptions;
 using ParcelPeople.Domain.Models;
 using ParcelPeople.Infrastructure.DbContexts;
 using ParcelPeople.Infrastructure.Repositories.Interfaces;
@@ -12,6 +13,16 @@ namespace ParcelPeople.Infrastructure.Repositories
         public async Task<Customer> Add(Customer customer)
         {
             ArgumentNullException.ThrowIfNull(customer);
+            
+            var existingCustomer = await context.Customers
+            .AnyAsync(c =>
+             (customer.Email != null && c.Email == customer.Email) ||
+             (customer.ContactNumber != null && c.ContactNumber == customer.ContactNumber));
+
+            if (existingCustomer)
+            {
+                throw new CustomerAlreadyExistsException("A customer with this email or phone already exists");
+            }
 
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
@@ -26,6 +37,7 @@ namespace ParcelPeople.Infrastructure.Repositories
                 .ThenInclude(s => s.Cities)
                 .Include(c => c.Shipments)
                 .ThenInclude(s => s.Parcels)
+            .AsNoTracking()
             .FirstOrDefaultAsync(c =>
              (email != null && c.Email == email) ||
              (contactNumber != null && c.ContactNumber == contactNumber));
@@ -38,6 +50,7 @@ namespace ParcelPeople.Infrastructure.Repositories
                 .ThenInclude(s => s.Cities)
                 .Include(c => c.Shipments)
                 .ThenInclude(s => s.Parcels)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id) ?? throw new Exception("Customer could not be found");
         }
     }

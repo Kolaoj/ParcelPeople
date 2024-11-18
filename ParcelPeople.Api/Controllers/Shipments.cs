@@ -3,6 +3,8 @@ using ParcelPeople.Application.Dtos.Add;
 using ParcelPeople.Application.Dtos.Update;
 using ParcelPeople.Application.Services.Interfaces;
 using ParcelPeople.Domain.Enums;
+using ParcelPeople.Domain.Exceptions;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ParcelPeople.Api.Controllers
 {
@@ -13,6 +15,7 @@ namespace ParcelPeople.Api.Controllers
         private readonly IShipmentService shipmentService = shipmentService ?? throw new ArgumentNullException(nameof(shipmentService));
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Gets a shipment")]
         public async Task<IResult> GetShipment(Guid id)
         {
             try
@@ -33,6 +36,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpPost("quote")]
+        [SwaggerOperation(Summary = "Creates a new shipment quote")]
         public async Task<IResult> CreateShipmentQuote([FromBody] CreateShipmentQuote createShipmentQuote)
         {
             try
@@ -43,6 +47,10 @@ namespace ParcelPeople.Api.Controllers
 
                 return Results.Created(uri, quote);
             }
+            catch (CityDoesNotExistExcepion ex)
+            {
+                return Results.Problem(detail: $"{ex.Message}", statusCode: StatusCodes.Status400BadRequest);
+            }
             catch (Exception ex)
             {
                 return Results.Problem(detail: $"{ex.Message}", statusCode: StatusCodes.Status500InternalServerError);
@@ -50,6 +58,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpPatch("{id}/create")]
+        [SwaggerOperation(Summary = "Updates a shipment quote to a real shipment", Description = "The status of a shipment will go from quote to pending")]
         public async Task<IResult> CreateShipment(Guid id)
         {
             try
@@ -65,6 +74,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpPatch("{id}/stauses/{status}update")]
+        [SwaggerOperation(Summary = "Updates a shipment status")]
         public async Task<IResult> UpdateShipmentStatus(Guid id, ShipmentStatus status)
         {
             try
@@ -80,6 +90,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpPatch("shipmentCities/{id}/update")]
+        [SwaggerOperation(Summary = "Updates a shipment city's status", Description = "Moves a shipment by updating it's status and potentially time of arrival")]
         public async Task<IResult> MoveShipmentCity(Guid id, [FromBody] MoveShipmentCity moveShipmentCity)
         {
             try

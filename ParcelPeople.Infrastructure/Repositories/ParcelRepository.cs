@@ -13,6 +13,7 @@ namespace ParcelPeople.Infrastructure.Repositories
         {
             var parcelSurcharges = await context.ParcelSurcharges
               .Where(surcharge => surcharge.DimensionThreshold <= dimensions)
+              .AsNoTracking()
               .ToListAsync();
 
             return parcelSurcharges.OrderByDescending(s => s.Surcharge).First();
