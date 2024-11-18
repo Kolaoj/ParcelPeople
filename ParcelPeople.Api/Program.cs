@@ -4,6 +4,7 @@ using ParcelPeople.Application.Services.Interfaces;
 using ParcelPeople.Infrastructure.DbContexts;
 using ParcelPeople.Infrastructure.Repositories;
 using ParcelPeople.Infrastructure.Repositories.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,8 +20,13 @@ builder.Services.AddControllers()
     });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c=>
- c.EnableAnnotations());
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.ExampleFilters(); 
+});
+
+builder.Services.AddSwaggerExamplesFromAssemblyOf<ShippingExampleRequests>();
 
 var relativeConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Could not obtain the connection string, check appsettings"); 
 var absoluteConnectionString = Path.GetFullPath(relativeConnectionString, AppContext.BaseDirectory);

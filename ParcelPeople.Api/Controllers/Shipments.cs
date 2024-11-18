@@ -5,6 +5,7 @@ using ParcelPeople.Application.Services.Interfaces;
 using ParcelPeople.Domain.Enums;
 using ParcelPeople.Domain.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace ParcelPeople.Api.Controllers
 {
@@ -36,6 +37,7 @@ namespace ParcelPeople.Api.Controllers
         }
 
         [HttpPost("quote")]
+        [SwaggerRequestExample(typeof(CreateShipmentQuote), typeof(ShippingExampleRequests))]
         [SwaggerOperation(Summary = "Creates a new shipment quote")]
         public async Task<IResult> CreateShipmentQuote([FromBody] CreateShipmentQuote createShipmentQuote)
         {
