@@ -51,6 +51,10 @@ namespace ParcelPeople.Api.Controllers
             {
                 return Results.Problem(detail: $"{ex.Message}", statusCode: StatusCodes.Status400BadRequest);
             }
+            catch(OriginDestinationConflictException ex)
+            {
+                return Results.Problem(detail: $"{ex.Message}", statusCode: StatusCodes.Status400BadRequest);
+            }
             catch (Exception ex)
             {
                 return Results.Problem(detail: $"{ex.Message}", statusCode: StatusCodes.Status500InternalServerError);

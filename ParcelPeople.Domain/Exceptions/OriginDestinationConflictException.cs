@@ -1,6 +1,6 @@
 ﻿namespace ParcelPeople.Domain.Exceptions
 {
-    public class OriginDestinationConflictException : Exception
+    public class OriginDestinationConflictException(string message) : Exception(message)
     {
     }
 }

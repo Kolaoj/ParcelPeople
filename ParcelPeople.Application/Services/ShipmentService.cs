@@ -20,13 +20,8 @@ namespace ParcelPeople.Application.Services
         {
             var cities = await cityService.GetCitiesByIds(createQuote.Cities.Select(c => c.CityId));
 
-            var unknownCity = createQuote.Cities.FirstOrDefault(sc=> !cities.Select(c=> c.Id).Contains(sc.CityId) );
-
-            if (unknownCity != null)
-            {
-                throw new CityDoesNotExistExcepion($"The city with id: {unknownCity.CityId} does not exist");
-            }
-
+            ValidateShipmentCities(createQuote.Cities, cities);
+            
             var shipmentCostAndCultureCode = await CalculateShipmentCost(createQuote.Cities, cities, createQuote.Parcels);
 
             var shipment = createQuote.ToQuote(cities, shipmentCostAndCultureCode.Item1, shipmentCostAndCultureCode.Item2);
@@ -63,6 +58,30 @@ namespace ParcelPeople.Application.Services
             shipment.Status = shipmentStatus;
 
             await shipmentRepository.Update(shipment);
+        }
+
+
+        private void ValidateShipmentCities(IEnumerable<CreateShipmentCity> shipmentCities, IEnumerable<City> cities) 
+        {
+            var unknownCity = shipmentCities.FirstOrDefault(sc => !cities.Select(c => c.Id).Contains(sc.CityId));
+
+            if (unknownCity != null)
+            {
+                throw new CityDoesNotExistExcepion($"The city with id: {unknownCity.CityId} does not exist");
+            }
+
+            if (shipmentCities.Count() <= 1)
+            {
+                throw new OriginDestinationConflictException("There must be at least two shipping cities.");
+            }
+            if (shipmentCities.Any(c => c.Origin && c.Destination))
+            {
+                throw new OriginDestinationConflictException("One city can not be both an origin and a destination");
+            }
+            if (!shipmentCities.Any(c => c.Origin) || !shipmentCities.Any(c => c.Destination))
+            {
+                throw new OriginDestinationConflictException("There must be at least 1 city of origin and 1 destination city");
+            }
         }
 
         private async Task<Tuple<decimal, string>> CalculateShipmentCost(IEnumerable<CreateShipmentCity> createShipmentCities, IEnumerable<City> cities, IEnumerable<CreateParcel> createParcels)
