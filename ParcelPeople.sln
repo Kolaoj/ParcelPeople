@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelPeople.Api", "ParcelPeople.Api\ParcelPeople.Api.csproj", "{A8D01FFF-44EE-4976-B30A-683CB0B26360}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelPeople.Domain", "ParcelPeople.Domain\ParcelPeople.Domain.csproj", "{932706CE-1ECF-478E-9F4A-BB58ADDD9F8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelPeople.Infrastructure", "ParcelPeople.Infrastructure\ParcelPeople.Infrastructure.csproj", "{B3534A3E-633A-4119-AA72-50967B0C3534}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelPeople.Application", "ParcelPeople.Application\ParcelPeople.Application.csproj", "{67CF31A4-7761-439C-95BF-D520F6467B2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F933326E-D524-46AB-86D7-6D46B9EFBDFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelPeopleTests", "ParcelPeopleTests\ParcelPeopleTests.csproj", "{AC23E864-F172-485A-A566-D65A18AC7220}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8D01FFF-44EE-4976-B30A-683CB0B26360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D01FFF-44EE-4976-B30A-683CB0B26360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D01FFF-44EE-4976-B30A-683CB0B26360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D01FFF-44EE-4976-B30A-683CB0B26360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{932706CE-1ECF-478E-9F4A-BB58ADDD9F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{932706CE-1ECF-478E-9F4A-BB58ADDD9F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{932706CE-1ECF-478E-9F4A-BB58ADDD9F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{932706CE-1ECF-478E-9F4A-BB58ADDD9F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3534A3E-633A-4119-AA72-50967B0C3534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3534A3E-633A-4119-AA72-50967B0C3534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3534A3E-633A-4119-AA72-50967B0C3534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3534A3E-633A-4119-AA72-50967B0C3534}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CF31A4-7761-439C-95BF-D520F6467B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CF31A4-7761-439C-95BF-D520F6467B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CF31A4-7761-439C-95BF-D520F6467B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CF31A4-7761-439C-95BF-D520F6467B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC23E864-F172-485A-A566-D65A18AC7220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC23E864-F172-485A-A566-D65A18AC7220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC23E864-F172-485A-A566-D65A18AC7220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC23E864-F172-485A-A566-D65A18AC7220}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AC23E864-F172-485A-A566-D65A18AC7220} = {F933326E-D524-46AB-86D7-6D46B9EFBDFC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57A80693-FFF9-449D-B8A1-A8662303E09C}
+	EndGlobalSection
+EndGlobal
